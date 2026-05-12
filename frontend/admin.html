@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - MediCare</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="favicon.png" type="image/x-icon">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fa-solid fa-hospital-user me-2"></i>MediCare Admin
+            </a>
+            <div class="ms-auto d-flex align-items-center">
+                <span id="userName" class="me-3 fw-bold"></span>
+                <button id="themeToggle" class="btn btn-outline-secondary rounded-circle me-3">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <button class="btn btn-outline-danger" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <!-- Summary Cards -->
+        <div class="row mb-5">
+            <div class="col-md-3 mb-3">
+                <div class="card p-3 shadow-sm text-center border-0 border-start border-primary border-4 h-100">
+                    <h5 class="text-secondary mb-1">Total Patients</h5>
+                    <h2 class="fw-bold mb-0" id="statPatients">-</h2>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card p-3 shadow-sm text-center border-0 border-start border-success border-4 h-100">
+                    <h5 class="text-secondary mb-1">Active Doctors</h5>
+                    <h2 class="fw-bold mb-0" id="statDoctors">-</h2>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card p-3 shadow-sm text-center border-0 border-start border-info border-4 h-100">
+                    <h5 class="text-secondary mb-1">Today's Appts</h5>
+                    <h2 class="fw-bold mb-0" id="statTodayAppts">-</h2>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card p-3 shadow-sm text-center border-0 border-start border-warning border-4 h-100">
+                    <h5 class="text-secondary mb-1">Pending Appts</h5>
+                    <h2 class="fw-bold mb-0" id="statPendingAppts">-</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Manage Doctors -->
+            <div class="col-lg-6 mb-4">
+                <div class="card h-100 p-4 shadow-sm animate-fade-up">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4 class="mb-0"><i class="fa-solid fa-user-doctor text-primary me-2"></i>Doctors</h4>
+                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addDoctorModal">Add Doctor</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Specialty</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="doctorsList">
+                                <tr><td colspan="4" class="text-center">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manage Patients -->
+            <div class="col-lg-6 mb-4">
+                <div class="card h-100 p-4 shadow-sm animate-fade-up" style="animation-delay: 0.1s;">
+                    <h4 class="mb-4"><i class="fa-solid fa-users text-primary me-2"></i>Patients</h4>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Contact</th>
+                                </tr>
+                            </thead>
+                            <tbody id="patientsList">
+                                <tr><td colspan="3" class="text-center">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+             <!-- All Appointments -->
+            <div class="col-12 mb-4">
+                <div class="card h-100 p-4 shadow-sm animate-fade-up" style="animation-delay: 0.2s;">
+                    <h4 class="mb-4"><i class="fa-solid fa-calendar text-primary me-2"></i>All Appointments</h4>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Patient</th>
+                                    <th>Doctor</th>
+                                    <th>Date & Time</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="appointmentsList">
+                                <tr><td colspan="5" class="text-center">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Doctor Modal -->
+    <div class="modal fade" id="addDoctorModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content bg-surface" style="color: var(--text-primary)">
+          <div class="modal-header border-bottom border-secondary">
+            <h5 class="modal-title">Add New Doctor</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <form id="formAddDoctor">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="docFirstName" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="docLastName" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" id="docEmail" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" id="docPassword" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Specialty</label>
+                    <input type="text" class="form-control" id="docSpecialty">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Phone</label>
+                    <input type="text" class="form-control" id="docPhone">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Add Doctor</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast for Notifications -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+      <div id="liveToast" class="toast align-items-center text-white bg-primary border-0" role="alert">
+        <div class="d-flex">
+          <div class="toast-body" id="toastMessage">Message</div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
