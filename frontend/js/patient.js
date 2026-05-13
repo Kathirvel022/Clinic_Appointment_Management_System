@@ -67,7 +67,6 @@ document.getElementById('formBookAppointment').addEventListener('submit', async 
     e.preventDefault();
     const token = localStorage.getItem('token');
     
-    // Add :00 to time if not present to match time format requirement
     let timeVal = document.getElementById('appointmentTime').value;
     if(timeVal.length === 5) timeVal += ':00';
     
