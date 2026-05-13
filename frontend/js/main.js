@@ -1,4 +1,4 @@
-const API_URL = 'http://127.0.0.1:8000/api';
+const API_URL = 'https://clinic-appointment-management-system-ej6s.onrender.com/api';
 
 const themeToggle = document.getElementById('themeToggle');
 if (themeToggle) {
