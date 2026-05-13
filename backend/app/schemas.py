@@ -2,7 +2,7 @@ from pydantic import BaseModel, EmailStr
 from typing import Optional, List
 from datetime import date, time, datetime
 
-# --- Token ---
+# Token
 class Token(BaseModel):
     access_token: str
     token_type: str
@@ -11,7 +11,7 @@ class TokenData(BaseModel):
     email: Optional[str] = None
     role: Optional[str] = None
 
-# --- User ---
+# User
 class UserBase(BaseModel):
     email: EmailStr
     role: str
@@ -29,7 +29,7 @@ class UserOut(UserBase):
     class Config:
         from_attributes = True
 
-# --- Profiles ---
+# Profiles 
 class PatientBase(BaseModel):
     first_name: str
     last_name: str
@@ -64,7 +64,7 @@ class DoctorOut(DoctorBase):
     class Config:
         from_attributes = True
 
-# --- Appointments ---
+# Appointments
 class AppointmentBase(BaseModel):
     appointment_date: date
     appointment_time: time
