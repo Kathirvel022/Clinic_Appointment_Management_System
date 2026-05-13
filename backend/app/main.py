@@ -10,6 +10,10 @@ models.Base.metadata.create_all(bind=database.engine)
 
 app = FastAPI(title="MediCare Clinic API")
 
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to MediCare Clinic API"}
+
 # Setup CORS for frontend
 app.add_middleware(
     CORSMiddleware,
