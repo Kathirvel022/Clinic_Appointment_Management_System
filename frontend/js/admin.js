@@ -7,10 +7,55 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.getElementById('userName').textContent = `${user.email}`;
 
+    await loadProfile();
     await loadSummary();
     await loadDoctors();
     await loadPatients();
     await loadAppointments();
+});
+
+async function loadProfile() {
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(`${API_URL}/auth/profile`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+            const profile = await res.json();
+            document.getElementById('editFirstName').value = profile.first_name || '';
+            document.getElementById('editLastName').value = profile.last_name || '';
+            document.getElementById('editPhone').value = profile.phone || '';
+        }
+    } catch(e) { console.error(e); }
+}
+
+document.getElementById('formEditProfile')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem('token');
+    const data = {
+        first_name: document.getElementById('editFirstName').value,
+        last_name: document.getElementById('editLastName').value,
+        phone: document.getElementById('editPhone').value
+    };
+
+    try {
+        const res = await fetch(`${API_URL}/auth/profile`, {
+            method: 'PUT',
+            headers: { 
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        if(res.ok) {
+            showToast("Profile updated successfully!");
+            const modal = bootstrap.Modal.getInstance(document.getElementById('editProfileModal'));
+            modal.hide();
+        } else {
+            const err = await res.json();
+            showToast(err.detail || "Failed to update profile", true);
+        }
+    } catch(e) { showToast("Network error", true); }
 });
 
 async function loadSummary() {

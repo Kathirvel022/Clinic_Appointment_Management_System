@@ -31,6 +31,11 @@
             <div class="col">
                 <h2 class="fw-bold">Welcome back, <span id="welcomeName" class="text-gradient"></span>!</h2>
             </div>
+            <div class="col-auto">
+                <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                    Edit Profile
+                </button>
+            </div>
         </div>
 
         <div class="row">
@@ -85,6 +90,37 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content bg-surface" style="color: var(--text-primary)">
+          <div class="modal-header border-bottom border-secondary">
+            <h5 class="modal-title">Edit Profile</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <form id="formEditProfile">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="editFirstName" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="editLastName" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Phone</label>
+                    <input type="text" class="form-control" id="editPhone">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Toast for Notifications -->

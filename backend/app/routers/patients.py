@@ -20,3 +20,22 @@ def get_patient(id: int, db: Session = Depends(database.get_db), current_user: m
     if current_user.role == "patient" and patient.user_id != current_user.id:
         raise HTTPException(status_code=403, detail="Not authorized")
     return patient
+
+@router.put("/{id}", response_model=schemas.PatientOut)
+def update_patient(id: int, patient_update: schemas.PatientCreate, db: Session = Depends(database.get_db), current_user: models.User = Depends(auth.get_current_user)):
+    patient = db.query(models.Patient).filter(models.Patient.id == id).first()
+    if not patient:
+        raise HTTPException(status_code=404, detail="Patient not found")
+
+    if current_user.role == "patient" and patient.user_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    # Update patient information
+    patient.first_name = patient_update.first_name
+    patient.last_name = patient_update.last_name
+    patient.phone = patient_update.phone
+    patient.date_of_birth = patient_update.date_of_birth
+    patient.gender = patient_update.gender
+    patient.address = patient_update.address
+    db.commit()
+    db.refresh(patient)
+    return patient

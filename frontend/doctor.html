@@ -18,6 +18,7 @@
             </a>
             <div class="ms-auto d-flex align-items-center">
                 <span id="userName" class="me-3 fw-bold"></span>
+                <button class="btn btn-outline-primary btn-sm me-3" data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Profile</button>
                 <button id="themeToggle" class="btn btn-outline-secondary rounded-circle me-3">
                     <i class="fa-solid fa-moon"></i>
                 </button>
@@ -73,6 +74,41 @@
           <div class="modal-footer border-top border-secondary">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary" onclick="saveNotes()">Save & Complete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content bg-surface" style="color: var(--text-primary)">
+          <div class="modal-header border-bottom border-secondary">
+            <h5 class="modal-title">Edit Profile</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <form id="formEditProfile">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="editFirstName" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="editLastName" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Phone</label>
+                    <input type="text" class="form-control" id="editPhone">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Specialty</label>
+                    <input type="text" class="form-control" id="editSpecialty">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+            </form>
           </div>
         </div>
       </div>

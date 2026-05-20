@@ -22,6 +22,7 @@ class UserCreate(BaseModel):
     role: str = "patient"
     first_name: str
     last_name: str
+    phone: Optional[str] = None
 
 class UserOut(UserBase):
     id: int
@@ -29,7 +30,33 @@ class UserOut(UserBase):
     class Config:
         from_attributes = True
 
+# Admin
+class AdminBase(BaseModel):
+    first_name: str
+    last_name: str
+    phone: Optional[str] = None
+
+class AdminCreate(AdminBase):
+    pass
+
+class AdminUpdate(BaseModel):
+    first_name: str
+    last_name: str
+    phone: Optional[str] = None
+
+class AdminOut(AdminBase):
+    id: int
+    user_id: int
+    class Config:
+        from_attributes = True
+
 # Profiles 
+class ProfileUpdate(BaseModel):
+    first_name: str
+    last_name: str
+    phone: Optional[str] = None
+    specialty: Optional[str] = None
+
 class PatientBase(BaseModel):
     first_name: str
     last_name: str
@@ -40,6 +67,14 @@ class PatientBase(BaseModel):
 
 class PatientCreate(PatientBase):
     pass
+
+class PatientUpdate(BaseModel):
+    first_name: str
+    last_name: str
+    phone: Optional[str] = None
+    date_of_birth: Optional[str] = None
+    gender: Optional[str] = None
+    address: Optional[str] = None
 
 class PatientOut(PatientBase):
     id: int

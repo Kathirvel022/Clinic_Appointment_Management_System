@@ -52,6 +52,7 @@ class Admin(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     first_name = Column(String(100), nullable=False)
     last_name = Column(String(100), nullable=False)
+    phone = Column(String(20))
 
     user = relationship("User", back_populates="admin_profile")
 

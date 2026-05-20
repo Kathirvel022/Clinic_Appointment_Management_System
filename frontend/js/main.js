@@ -127,7 +127,8 @@ if(formRegister) {
             password: document.getElementById('regPassword').value,
             first_name: document.getElementById('regFirstName').value,
             last_name: document.getElementById('regLastName').value,
-            role: "patient"
+            phone: document.getElementById('regPhone').value,
+            role: document.getElementById('regRole').value
         };
 
         try {
